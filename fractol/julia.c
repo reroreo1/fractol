@@ -8,40 +8,44 @@ static float step(float x, float y,float x1,float y1)
     i = (x - y) / (x1 - y1);
     return i;
 }
-static void iterate(t_z *z, t_z c)
+static float iteratei(t_z z, t_z c)
 {
-    float temp = z->re;
-    z->re = z->re * z->re - z->im * z->im + c.re;
-    z->im = 2 * temp * z->im + c.im;
+    z.re = z.re * z.re - z.im * z.im + c.re;
+    return (z.re);
+}
+static float iteratej(t_z z, t_z c,float temp)
+{
+    z.im = 2 * temp * z.im + c.im;
+    return (z.im);
 }
 
-void julia(int x, int y, int color,t_z c)
+void julia(t_mlx *w)
+
 {   
+    float temp;
     int n = 0;
-    t_z z;
     int i = 0;
     int j = 0;
-    void *mlx;
-    mlx = mlx_init();
-    void *win_ptr=mlx_new_window(mlx,x,y,"Julia set");
-    while(j < y)
+
+    while(j < w->y)
     {
         i = 0;
-        while(i < x)
+        while(i < w->x)
         {
             n = 0;
-            z.re = i * step(2.f, -2.f, x, 0) + -2.f;
-            z.im = 2.f - j * step(2.f, -2.f, y, 0);
-            while (n < 1000 && z.re * z.re + z.im * z.im <= 4)
-            {   
-               iterate(&z,c);
+            w->z.re = i * step(w->st1, w->st2, 0,w->x) + w->st1;
+            w->z.im = w->st2 - j * step(w->st1, w->st2, 0, w->y);
+            while (n < 1000 && w->z.re * w->z.re + w->z.im * w->z.im <= 4)
+            {
+                temp = w->z.re;
+                w->z.re = iteratei(w->z, w->c);
+                w->z.im = iteratej(w->z,w->c,temp);
                 n++;
             }
             if (n < 1000)
-                mlx_pixel_put(mlx,win_ptr,i,j,color * 10 * n);
+                mlx_pixel_put(w->mlx, w->win, i, j, w->color * cos(n));
             i++;
         }
         j++;
     }
-    mlx_loop(mlx);
 }

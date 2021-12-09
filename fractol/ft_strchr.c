@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rezzahra <rezzahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 12:44:26 by rezzahra          #+#    #+#             */
-/*   Updated: 2021/12/09 15:14:33 by rezzahra         ###   ########.fr       */
+/*   Created: 2021/11/01 20:40:51 by rezzahra          #+#    #+#             */
+/*   Updated: 2021/12/07 12:17:50 by rezzahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+#include "fractol.h"
+
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
-	int	nbr;
-	int	sign;
 
 	i = 0;
-	nbr = 0;
-	sign = 1;
-	while ((str[i] == '\t' || str[i] == '\n' || str[i] == '\v' || str[i] == '\f'
-		|| str[i] == '\r' || str[i] == ' ') && str[i])
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (s[i])
 	{
-		if (str[i] == '-')
-			sign = (-1);
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nbr = nbr * 10 + (str[i] - 48);
-		i++;
-	}
-	return (nbr * sign);
+	if (s[i] == c)
+		return ((char *)&s[i]);
+	return (0);
 }

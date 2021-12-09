@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   func.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rezzahra <rezzahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 12:44:26 by rezzahra          #+#    #+#             */
-/*   Updated: 2021/12/09 15:14:33 by rezzahra         ###   ########.fr       */
+/*   Created: 2021/12/09 19:48:11 by rezzahra          #+#    #+#             */
+/*   Updated: 2021/12/09 19:51:24 by rezzahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+#include "fractol.h"
+int func(int k, t_mlx *w)
 {
-	int	i;
-	int	nbr;
-	int	sign;
-
-	i = 0;
-	nbr = 0;
-	sign = 1;
-	while ((str[i] == '\t' || str[i] == '\n' || str[i] == '\v' || str[i] == '\f'
-		|| str[i] == '\r' || str[i] == ' ') && str[i])
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if(k == 4)
 	{
-		if (str[i] == '-')
-			sign = (-1);
-		i++;
+		w->st1 /= 2;
+		w->st2 /= 2;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	if(k == 5)
 	{
-		nbr = nbr * 10 + (str[i] - 48);
-		i++;
+		w->st1 *= 2;
+		w->st2 *= 2;
 	}
-	return (nbr * sign);
+	if (w->is_julia == 1)
+		julia(w);
+	else if (w->is_julia == 0)
+		mandelbrot(w);
+	return 0;
 }

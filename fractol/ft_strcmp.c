@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rezzahra <rezzahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 12:44:26 by rezzahra          #+#    #+#             */
-/*   Updated: 2021/12/09 15:14:33 by rezzahra         ###   ########.fr       */
+/*   Created: 2021/12/07 10:56:53 by rezzahra          #+#    #+#             */
+/*   Updated: 2021/12/07 10:57:03 by rezzahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	nbr;
-	int	sign;
+#include "fractol.h"
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*set1;
+	unsigned char	*set2;
+
+	set1 = (unsigned char *)s1;
+	set2 = (unsigned char *)s2;
 	i = 0;
-	nbr = 0;
-	sign = 1;
-	while ((str[i] == '\t' || str[i] == '\n' || str[i] == '\v' || str[i] == '\f'
-		|| str[i] == '\r' || str[i] == ' ') && str[i])
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while ((set1[i] || set2[i]))
 	{
-		if (str[i] == '-')
-			sign = (-1);
+		if (set1[i] != set2[i])
+		{
+			return (set1[i] - set2[i]);
+		}
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nbr = nbr * 10 + (str[i] - 48);
-		i++;
-	}
-	return (nbr * sign);
+	return (0);
 }

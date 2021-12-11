@@ -20,13 +20,17 @@ static float iteratej(t_z z, t_z c,float temp)
 }
 
 void julia(t_mlx *w)
-
 {   
-    float temp;
+ float temp;
     int n = 0;
     int i = 0;
     int j = 0;
-
+    int *buffer;
+    int  pixel_bits;
+    int line_bytes;
+    int endian;
+    buffer = (int *)mlx_get_data_addr(w->image, &pixel_bits, &line_bytes, &endian);
+    line_bytes /= 4;
     while(j < w->y)
     {
         i = 0;
@@ -35,17 +39,17 @@ void julia(t_mlx *w)
             n = 0;
             w->z.re = i * step(w->st1, w->st2, 0,w->x) + w->st1;
             w->z.im = w->st2 - j * step(w->st1, w->st2, 0, w->y);
-            while (n < 1000 && w->z.re * w->z.re + w->z.im * w->z.im <= 4)
+            while (++n < 500 && w->z.re * w->z.re + w->z.im * w->z.im < 4)
             {
                 temp = w->z.re;
                 w->z.re = iteratei(w->z, w->c);
                 w->z.im = iteratej(w->z,w->c,temp);
-                n++;
             }
-            if (n < 1000)
-                mlx_pixel_put(w->mlx, w->win, i, j, w->color * cos(n));
+            if (n < 500)
+               buffer[(j * line_bytes) + i] = w->color * n;
             i++;
         }
         j++;
     }
+    mlx_put_image_to_window(w->mlx,w->win,w->image,0,0);
 }

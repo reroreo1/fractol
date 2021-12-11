@@ -18,6 +18,7 @@ typedef struct s_mlx
     void   *win;
     int x;
     int y;
+    void   *image;
     float   st1;
     float   st2;
     t_z z;
@@ -39,7 +40,9 @@ float ft_itof(const char *num);
 int	ft_isdigit(char *c);
 char *nopoint(const char *num);
 int quit();
-int func(int k, t_mlx *w);
-
+int func(int k);
+int my_mlx_put_pixel(t_mlx *w);
+void backtoblack(t_mlx *w);
+void myset(t_mlx *w);
 
 #endif

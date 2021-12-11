@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bonus.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rezzahra <rezzahra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/11 01:48:12 by rezzahra          #+#    #+#             */
+/*   Updated: 2021/12/11 01:58:58 by rezzahra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 static float step(float x, float y,float x1,float y1)
@@ -11,22 +23,17 @@ static float step(float x, float y,float x1,float y1)
 
 static float iteratei(t_z z, float step, int i, float st1)
 {
-    z.re = z.re * z.re - z.im * z.im + i * step + st1;
+    z.re = z.re * z.re * z.re - 3 * z.im * z.im * z.re + i * step + st1;
     return(z.re);
 }
 
 static float iteratej(t_z z, float step, int j, float temp)
 {
-    z.im = 2 * temp * z.im - j * step;
+    z.im = 3 * temp * temp * z.im  - z.im * z.im * z.im - j * step;
     return (z.im);
 }
-int quit()
-{
-    exit(1);
-    return (1);
-}
 
-void mandelbrot(t_mlx *w)
+void myset(t_mlx *w)
 {
     float temp;
     int n = 0;
@@ -46,7 +53,7 @@ void mandelbrot(t_mlx *w)
             n = 0;
             w->z.re = 0;
             w->z.im = 0;
-            while (++n < 500 && w->z.re * w->z.re + w->z.im * w->z.im < 4)
+            while (++n < 500 && w->z.re * w->z.re + w->z.im * w->z.im < 8)
             {
                 temp = w->z.re;    
                 w->z.re = iteratei(w->z,step(w->st1, w->st2, 0, w->x),i,w->st1);
